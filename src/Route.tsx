@@ -6,7 +6,7 @@ import {RouteType} from "./FlightTable";
 
 type RouteProps = {
     route: RouteType
-    toggleFTIsBooked: (flightTableID: string, routeID: string) => void;
+    toggleFTIsBooked: (flightTableID: string, routeID: string, isDone: boolean) => void;
     flightTableID: string;
     updateFTRoutesFrom: (flightID: string, routeID: string, newFrom: string) => void;
     updateFTRoutesTo: (flightID: string, routeID: string, newTo: string) => void;
@@ -26,16 +26,16 @@ export const Route = ({
         removeFTRoute(flightTableID, route.id)
     };
 
-    const handleUpdateRouteFrom = () => {
-        // updateFTRoutesFrom()
+    const handleUpdateRouteFrom = (newFrom : string) => {
+         updateFTRoutesFrom(flightTableID, route.id, newFrom)
     };
 
-    const handleUpdateRouteTo = () => {
-        //updateFTRoutesTo();
+    const handleUpdateRouteTo = (newTo: string) => {
+        updateFTRoutesTo(flightTableID, route.id, newTo);
     }
 
-    const handleToggleFTIsBooked = () => {
-
+    const handleToggleFTIsBooked = (isDone: boolean) => {
+        toggleFTIsBooked(flightTableID, route.id, isDone)
     }
 
     return (
@@ -47,13 +47,13 @@ export const Route = ({
                         <Button title={'X'} onClick={handleRemoveFTRoute}/>
                     </td>
                     <td className={`${styles.ftCell} ${styles.pointerCursor}`}>
-                        <UpdateItem oldTitle={route.from} callBack={() => 'handleUpdateRouteFrom'}/>
+                        <UpdateItem oldTitle={route.from} callBack={handleUpdateRouteFrom}/>
                     </td>
                     <td className={`${styles.ftCell} ${styles.pointerCursor}`}>
                         ➔
                     </td>
                     <td className={`${styles.ftCell} ${styles.pointerCursor}`}>
-                        <UpdateItem oldTitle={route.to} callBack={() => 'handleUpdateRouteTo'}/>
+                        <UpdateItem oldTitle={route.to} callBack={handleUpdateRouteTo}/>
                     </td>
                     <td className={styles.checkboxContainer}>
                         <label>
